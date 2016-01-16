@@ -38,6 +38,8 @@ namespace TsumiGamePicker.Utility
                     }
                 }
 
+                if (games.Count == 0) return null;
+
                 return games;
             }
             catch (Exception ex)

@@ -85,6 +85,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\IsEmptyStringConverter.cs" />
     <Compile Include="Models\Games.cs" />
     <Compile Include="ViewModels\GameInformationViewModel.cs" />
     <Compile Include="Views\GameInformation.xaml.cs">

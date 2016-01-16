@@ -2,11 +2,44 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+             xmlns:vm="clr-namespace:TsumiGamePicker.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TsumiGamePicker.Views"
+             xmlns:conv="clr-namespace:TsumiGamePicker.Converter"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance vm:GameInformationViewModel}">
+
     <Grid>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Game Information" FontSize="20" />
+        <Grid.Resources>
+            <conv:IsEmptyStringConverter x:Key="isEmptyStringConverter"/>
+            <Style x:Key="PlayRecordDisplay" TargetType="{x:Type StackPanel}">
+                <Setter Property="Visibility" Value="Hidden"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding SelectedGame.HoursOnRecord, Converter={StaticResource isEmptyStringConverter}}" Value="false">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="1.5*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding SelectedGame.Name}" FontSize="15"/>
+
+        <Grid Grid.Row="2">
+            <StackPanel Name="playRecordPanel" Margin="0,5,0,0" Style="{StaticResource PlayRecordDisplay}">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Player Record" FontSize="13"/>
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="13" Margin="0,5,0,0">
+                    <Run Text="{Binding SelectedGame.HoursOnRecord}" />
+                    <Run Text=" Hours" />
+                </TextBlock>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

@@ -31,6 +31,24 @@ namespace TsumiGamePicker.ViewModels
         #endregion
 
 
+        #region GameInformationContent変更通知プロパティ
+        private object _GameInformationContent;
+
+        public object GameInformationContent
+        {
+            get
+            { return _GameInformationContent; }
+            set
+            { 
+                if (_GameInformationContent == value)
+                    return;
+                _GameInformationContent = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
         #region SelectedGame変更通知プロパティ
         private string _SelectedGame;
 
@@ -52,6 +70,7 @@ namespace TsumiGamePicker.ViewModels
         public GamePickerContentsViewModel()
         {
             GameListContent = new GameListViewModel();
+            GameInformationContent = new GameInformationViewModel();
 
             SteamGameClient.Current.OnGameSelect.Subscribe(OnGameSelected);
         }

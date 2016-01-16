@@ -20,15 +20,16 @@ namespace TsumiGamePicker.Wrapper
         #endregion
 
         private Games Games;
-        readonly Subject<Game> _CurrentGame = new Subject<Game>();
-        public IObservable<Game> OnGameSelect => this._CurrentGame.AsObservable();
+        readonly BehaviorSubject<Game> _SelectedGameGateway = new BehaviorSubject<Game>(null);
+        public IObservable<Game> OnGameSelect => this._SelectedGameGateway.AsObservable();
 
-        readonly Subject<Games> _CurrentGames = new Subject<Games>();
-        public IObservable<Games> OnGamesUpdate => this._CurrentGames.AsObservable();
+        readonly BehaviorSubject<Games> _GameListGateway = new BehaviorSubject<Games>(null);
+        public IObservable<Games> OnGamesUpdate => this._GameListGateway.AsObservable();
 
         private SteamGameClient()
         {
             Games = new Games();
+            _GameListGateway.OnNext(Games);
         }
 
         public void UpdateGamesFromSteam(string url)
@@ -43,13 +44,13 @@ namespace TsumiGamePicker.Wrapper
                     Games.Add(game);
                 }
 
-                _CurrentGames.OnNext(Games);
+                _GameListGateway.OnNext(Games);
             }
         }
 
         public void GameSelected(Game selectedGame)
         {
-
+            _SelectedGameGateway.OnNext(selectedGame);
         }
     }
 }

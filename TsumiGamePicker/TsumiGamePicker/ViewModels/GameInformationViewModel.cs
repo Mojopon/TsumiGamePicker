@@ -18,18 +18,33 @@ namespace TsumiGamePicker.ViewModels
 {
     public class GameInformationViewModel : ViewModel
     {
+
+        #region SelectedGame変更通知プロパティ
+        private Game _SelectedGame;
+
+        public Game SelectedGame
+        {
+            get
+            { return _SelectedGame; }
+            set
+            { 
+                if (_SelectedGame == value)
+                    return;
+                _SelectedGame = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
         public GameInformationViewModel()
         {
-            SteamGameClient.Current.OnGameSelect.Subscribe();
+            SteamGameClient.Current.OnGameSelect.Subscribe(OnGameSelected);
         }
 
         void OnGameSelected(Game game)
         {
-
-        }
-
-        public void Initialize()
-        {
+            SelectedGame = game;
         }
     }
 }
