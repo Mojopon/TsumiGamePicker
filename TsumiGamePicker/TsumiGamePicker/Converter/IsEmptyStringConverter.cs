@@ -14,7 +14,6 @@ namespace TsumiGamePicker.Converter
         {
             string str = value as string;
             bool isNullOrEmpty = string.IsNullOrEmpty(str);
-            Console.WriteLine(isNullOrEmpty);
             return isNullOrEmpty;
         }
 

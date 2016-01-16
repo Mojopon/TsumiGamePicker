@@ -30,7 +30,12 @@
             <RowDefinition Height="1.5*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding SelectedGame.Name}" FontSize="15"/>
+        <Grid Grid.Row="1">
+            <StackPanel  VerticalAlignment="Center">
+                <TextBlock HorizontalAlignment="Center" Text="{Binding SelectedGame.Name}" FontSize="15"/>
+                <Image Source="{Binding GameLogo}" Width="184" Height="69"/>
+            </StackPanel>
+        </Grid>
 
         <Grid Grid.Row="2">
             <StackPanel Name="playRecordPanel" Margin="0,5,0,0" Style="{StaticResource PlayRecordDisplay}">
