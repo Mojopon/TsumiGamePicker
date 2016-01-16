@@ -7,31 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using TsumiGamePicker.Models;
 using TsumiGamePicker.Utility;
+using TsumiGamePicker.Wrapper;
 
 namespace TsumiGamePicker.ViewModels
 {
     public class GamePickerContentsViewModel : ViewModel
     {
-
-        #region Games変更通知プロパティ
-        private ObservableCollection<Game> _Games;
-
-        public ObservableCollection<Game> Games
-        {
-            get
-            { return _Games; }
-            set
-            { 
-                if (_Games == value)
-                    return;
-                _Games = value;
-                RaisePropertyChanged();
-            }
-        }
-        #endregion
-
-
-
         #region GameListContent変更通知プロパティ
         private GameListViewModel _GameListContent;
 
@@ -49,25 +30,40 @@ namespace TsumiGamePicker.ViewModels
         }
         #endregion
 
+
+        #region SelectedGame変更通知プロパティ
+        private string _SelectedGame;
+
+        public string SelectedGame
+        {
+            get
+            { return _SelectedGame; }
+            set
+            { 
+                if (_SelectedGame == value)
+                    return;
+                _SelectedGame = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
         public GamePickerContentsViewModel()
         {
-            Games = new ObservableCollection<Game>();
+            GameListContent = new GameListViewModel();
 
-            GameListContent = new GameListViewModel(this);
+            SteamGameClient.Current.OnGameSelect.Subscribe(OnGameSelected);
+        }
+
+        void OnGameSelected(Game game)
+        {
+
         }
 
         public void OnEnterURL(string url)
         {
-            var games = SteamProfileLoader.TryGetGamesFromSteamProfile(url);
-
-            if (games != null)
-            {
-                Games.Clear();
-                foreach (Game game in games)
-                {
-                    Games.Add(game);
-                }
-            }
+            SteamGameClient.Current.UpdateGamesFromSteam(url);
         }
     }
 }

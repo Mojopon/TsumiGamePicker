@@ -16,7 +16,14 @@ namespace TsumiGamePicker.Utility
         public static List<Game> TryGetGamesFromSteamProfile(string steamProfileURL)
         {
             try {
+                if (steamProfileURL[steamProfileURL.Length-1] != '/') steamProfileURL += "/";
                 steamProfileURL += "games/?xml=1";
+
+                if(!IsSteamProfileURL(steamProfileURL))
+                {
+                    Console.WriteLine("url is not valid");
+                    return null;
+                }
 
                 Console.WriteLine("loading from " + steamProfileURL);
 
@@ -38,6 +45,26 @@ namespace TsumiGamePicker.Utility
                 Console.WriteLine(ex);
                 return null;
             }
+        }
+
+        private static readonly string steamCommunityURL = "http://steamcommunity.com/";
+        private static readonly string[] steamProfileFolders = new string[]
+        {
+            "id/",
+            "profiles/",
+        };
+
+        static bool IsSteamProfileURL(string url)
+        {
+            foreach(string folder in steamProfileFolders)
+            {
+                var host = steamCommunityURL + folder;
+                if (host.Length > url.Length) continue;
+                var hostInGivenURL = url.Substring(0, host.Length);
+                if (hostInGivenURL.CompareTo(host) == 0) return true;
+            }
+
+            return false;
         }
 
         static Game ParseElementsToGameClass(XmlTextReader reader)

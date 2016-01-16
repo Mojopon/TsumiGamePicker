@@ -14,6 +14,7 @@ using Livet.Messaging.Windows;
 using TsumiGamePicker.Models;
 using System.Collections.ObjectModel;
 using TsumiGamePicker.Utility;
+using TsumiGamePicker.Wrapper;
 
 namespace TsumiGamePicker.ViewModels
 {
@@ -38,9 +39,40 @@ namespace TsumiGamePicker.ViewModels
         #endregion
 
 
-        public GameListViewModel(GamePickerContentsViewModel parent)
+        #region Game変更通知プロパティ
+        private Game _SelectedGame;
+
+        public Game SelectedGame
         {
-            Games = parent.Games;
+            get
+            { return _SelectedGame; }
+            set
+            { 
+                if (_SelectedGame == value)
+                    return;
+                _SelectedGame = value;
+                SteamGameClient.Current.GameSelected(_SelectedGame);
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
+        private LivetCompositeDisposable compositeDisposables = new LivetCompositeDisposable();
+        public GameListViewModel()
+        {
+            Games = new ObservableCollection<Game>();
+
+            compositeDisposables.Add(SteamGameClient.Current.OnGamesUpdate.Subscribe(OnUpdateGames));
+        }
+
+        public void OnUpdateGames(Games games)
+        {
+            Games.Clear();
+            foreach(Game game in games)
+            {
+                Games.Add(game);
+            }
         }
 
         public void Initialize()
