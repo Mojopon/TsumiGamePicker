@@ -22,8 +22,7 @@ namespace TsumiGamePicker
             DispatcherHelper.UIDispatcher = Dispatcher;
             //AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-            var mainWindow = new MainWindow();
-            mainWindow.Show();
+            WindowService.Current.OpenWindow(WindowType.MainWindow);
         }
 
         //集約エラーハンドラ

@@ -51,7 +51,7 @@ namespace TsumiGamePicker.ViewModels
                 if (_SelectedGame == value)
                     return;
                 _SelectedGame = value;
-                SteamGameClient.Current.GameSelected(_SelectedGame);
+                SteamGameClient.Current.SelectGame(_SelectedGame);
                 RaisePropertyChanged();
             }
         }

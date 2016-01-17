@@ -25,7 +25,12 @@
             </ContentControl.Resources>
         </ContentControl>
         <Grid Grid.Column="1">
-            <ContentControl x:Name="gameInformation" Content="{Binding GameInformationContent}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <v:GamePickerControls Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ContentControl Grid.Row="1" x:Name="gameInformation" Content="{Binding GameInformationContent}">
                 <ContentControl.Resources>
                     <DataTemplate DataType="{x:Type vm:GameInformationViewModel}">
                         <v:GameInformation/>

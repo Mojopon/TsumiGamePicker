@@ -49,10 +49,11 @@ namespace TsumiGamePicker.ViewModels
         #endregion
 
 
-        #region SelectedGame変更通知プロパティ
-        private string _SelectedGame;
 
-        public string SelectedGame
+        #region SelectedGame変更通知プロパティ
+        private Game _SelectedGame;
+
+        public Game SelectedGame
         {
             get
             { return _SelectedGame; }
@@ -67,6 +68,7 @@ namespace TsumiGamePicker.ViewModels
         #endregion
 
 
+
         public GamePickerContentsViewModel()
         {
             GameListContent = new GameListViewModel();
@@ -77,12 +79,20 @@ namespace TsumiGamePicker.ViewModels
 
         void OnGameSelected(Game game)
         {
-
+            if(game != null)
+            {
+                SelectedGame = game;
+            }
         }
 
         public void OnEnterURL(string url)
         {
             SteamGameClient.Current.UpdateGamesFromSteam(url);
+        }
+
+        public void OpenPickupWindow()
+        {
+            WindowService.Current.OpenWindow(WindowType.RandomGamePickupWindow);
         }
     }
 }

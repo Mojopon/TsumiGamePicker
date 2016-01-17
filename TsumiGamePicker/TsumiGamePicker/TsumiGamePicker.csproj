@@ -88,11 +88,23 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converter\IsEmptyStringConverter.cs" />
+    <Compile Include="Converter\IsNullConverter.cs" />
     <Compile Include="Models\Games.cs" />
     <Compile Include="ViewModels\GameInformationViewModel.cs" />
+    <Compile Include="ViewModels\RandomGamePickupViewModel.cs" />
     <Compile Include="Views\GameInformation.xaml.cs">
       <DependentUpon>GameInformation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GamePickerControls.xaml.cs">
+      <DependentUpon>GamePickerControls.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GamePickupSettings.xaml.cs">
+      <DependentUpon>GamePickupSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RandomGamePickupWindow.xaml.cs">
+      <DependentUpon>RandomGamePickupWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowService.cs" />
     <Compile Include="Wrapper\SteamGameClient.cs" />
     <Page Include="Views\GameInformation.xaml">
       <SubType>Designer</SubType>
@@ -103,6 +115,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GamePickerContents.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GamePickerControls.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GamePickupSettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -129,6 +149,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\RandomGamePickupWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

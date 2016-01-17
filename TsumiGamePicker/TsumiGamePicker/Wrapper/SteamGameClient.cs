@@ -50,7 +50,7 @@ namespace TsumiGamePicker.Wrapper
             }
         }
 
-        public void GameSelected(Game selectedGame)
+        public void SelectGame(Game selectedGame)
         {
             _SelectedGameGateway.OnNext(selectedGame);
         }
