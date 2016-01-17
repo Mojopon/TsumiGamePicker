@@ -24,12 +24,14 @@
                 </DataTemplate>
             </ContentControl.Resources>
         </ContentControl>
-        <ContentControl Grid.Column="1" x:Name="gameInformation" Content="{Binding GameInformationContent}">
-            <ContentControl.Resources>
-                <DataTemplate DataType="{x:Type vm:GameInformationViewModel}">
-                    <v:GameInformation/>
-                </DataTemplate>
-            </ContentControl.Resources>
-        </ContentControl>
+        <Grid Grid.Column="1">
+            <ContentControl x:Name="gameInformation" Content="{Binding GameInformationContent}">
+                <ContentControl.Resources>
+                    <DataTemplate DataType="{x:Type vm:GameInformationViewModel}">
+                        <v:GameInformation/>
+                    </DataTemplate>
+                </ContentControl.Resources>
+            </ContentControl>
+        </Grid>
     </Grid>
 </UserControl>

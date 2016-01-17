@@ -69,12 +69,7 @@ namespace TsumiGamePicker.ViewModels
 
             if (SelectedGame == null || string.IsNullOrWhiteSpace(SelectedGame.Logo)) return;
 
-            var image = new BitmapImage();
-            image.BeginInit();
-            image.UriSource = new Uri(SelectedGame.Logo, UriKind.Absolute);
-            image.DecodePixelWidth = 200;
-            image.EndInit();
-            GameLogo = image;
+            GameLogo = SteamGameClient.Current.GetBanner(SelectedGame);
         }
     }
 }

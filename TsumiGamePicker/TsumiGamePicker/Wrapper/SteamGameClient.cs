@@ -6,6 +6,8 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using TsumiGamePicker.Models;
 using TsumiGamePicker.Utility;
 
@@ -51,6 +53,17 @@ namespace TsumiGamePicker.Wrapper
         public void GameSelected(Game selectedGame)
         {
             _SelectedGameGateway.OnNext(selectedGame);
+        }
+
+        public ImageSource GetBanner(Game game)
+        {
+            var image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri(game.Logo, UriKind.Absolute);
+            image.DecodePixelWidth = 180;
+            image.EndInit();
+
+            return image;
         }
     }
 }
