@@ -13,6 +13,8 @@ using Livet.Messaging.Windows;
 
 using TsumiGamePicker.Models;
 using TsumiGamePicker.Wrapper;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace TsumiGamePicker.ViewModels
 {
@@ -60,7 +62,7 @@ namespace TsumiGamePicker.ViewModels
             }
         }
 
-        public void StartPickingUp(string seedText)
+        public async void StartPickingUp(string seedText)
         {
             if (GameList.Count == 0)
             {
@@ -68,17 +70,27 @@ namespace TsumiGamePicker.ViewModels
                 return;
             }
 
-            Console.WriteLine(seedText);
+            await PickupGame(seedText);
+        }
+
+        async Task PickupGame(string seedText)
+        {
             int seed = 0;
             for (int i = 0; i < seedText.Length; i++)
             {
                 seed += seedText[i];
             }
-            Console.WriteLine(seed);
-
             Random random = new Random(seed);
-            Game pickupGame = GameList[random.Next(0, GameList.Count)];
-            Pickup = pickupGame.Name;
+            Game pickupGame = null;
+            int waitTime = 50;
+            int roll = 100;
+            for (int i = 0; i < roll; i++)
+            {
+                pickupGame = GameList[random.Next(0, GameList.Count)];
+                Pickup = pickupGame.Name;
+                await Task.Delay(waitTime);
+            }
+
             SteamGameClient.Current.SelectGame(pickupGame);
         }
     }

@@ -20,6 +20,25 @@ namespace TsumiGamePicker.ViewModels
     public class MainWindowViewModel : ViewModel
     {
 
+
+        #region GamesLoaded変更通知プロパティ
+        private bool _GamesLoaded;
+
+        public bool GamesLoaded
+        {
+            get
+            { return _GamesLoaded; }
+            set
+            { 
+                if (_GamesLoaded == value)
+                    return;
+                _GamesLoaded = value;
+                RaisePropertyChanged();
+            }
+        }
+        #endregion
+
+
         #region Content変更通知プロパティ
         private object _Content;
         public object Content
